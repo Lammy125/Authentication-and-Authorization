@@ -3,7 +3,7 @@ require("./config/database").connect();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const cors = require("cors");
 
 // importing user context
 const User = require("./model/user");
@@ -12,6 +12,14 @@ const auth = require("./middleware/auth");
 const app = express();
 
 app.use(express.json());
+
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOptions));
 
 app.post("/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌 ");
